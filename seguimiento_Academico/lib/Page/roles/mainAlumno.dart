@@ -19,15 +19,8 @@ class MainAlumno extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-              // Título principal
-              const Text(
-                'SEGUIMIENTO ACADÉMICO',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF2C3E50),
-                ),
-              ),
+              // 🟪 Título principal estilizado (igual que mainDocente)
+              _buildMainTitle(),
 
               const SizedBox(height: 30),
 
@@ -70,49 +63,98 @@ class MainAlumno extends StatelessWidget {
     );
   }
 
-  // 🔹 Tabs superiores con navegación dinámica (por ahora redirigen a Inicio)
-Widget _buildTabBar(BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      _buildTab(context, 'INSTRUMENTACIÓN', true),
-      _buildTab(context, 'SEGUIMIENTO 1'),
-      _buildTab(context, 'SEGUIMIENTO 2'),
-      _buildTab(context, 'SEGUIMIENTO 3'),
-      _buildTab(context, 'REPORTE FINAL'),
-    ],
-  );
-}
-
-// 🔸 Tab individual con redirección a Inicio (cámbialo después por lo que necesites)
-Widget _buildTab(BuildContext context, String label, [bool isActive = false]) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const Pagina1()), // ← cámbialo después
-      );
-    },
-    child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      margin: const EdgeInsets.symmetric(horizontal: 2),
-      decoration: BoxDecoration(
-        color: isActive ? const Color(0xFF00A0E3) : const Color(0xFF7A7A7A),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 12,
+  // 🟦 Navegación horizontal completa (tabs) - igual que mainDocente
+  Widget _buildTabBar(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            color: const Color(0xFF00A0E3),
+            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            alignment: Alignment.center,
+            child: const Text(
+              'INSTRUMENTACIÓN',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
         ),
-      ),
-    ),
-  );
+        for (int i = 1; i <= 3; i++)
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const Pagina1()), // Puedes cambiar luego
+                );
+              },
+              child: Container(
+                color: const Color(0xFF888888),
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                alignment: Alignment.center,
+                child: Text(
+                  'SEGUIMIENTO $i',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const Pagina1()),
+              );
+            },
+            child: Container(
+              color: const Color(0xFF888888),
+              padding: const EdgeInsets.symmetric(vertical: 15.0),
+              alignment: Alignment.center,
+              child: const Text(
+                'REPORTE FINAL',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
-
+  // 🟪 Título principal con fondo oscuro y marco gris (igual que mainDocente)
+  Widget _buildMainTitle() {
+    return Container(
+      width: double.infinity,
+      color: const Color(0xFF888888), // Fondo gris exterior
+      padding: const EdgeInsets.all(2.0), // Padding gris alrededor
+      child: Container(
+        width: double.infinity,
+        color: const Color(0xFF2C3E50),
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        alignment: Alignment.center,
+        child: const Text(
+          'SEGUIMIENTO ACADÉMICO',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+      ),
+    );
+  }
 
   // 🔸 Botón redondeado que cambia según el texto
   Widget _buildRoundedButton(BuildContext context, String text) {

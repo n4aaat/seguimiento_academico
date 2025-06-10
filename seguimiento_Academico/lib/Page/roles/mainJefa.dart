@@ -13,14 +13,10 @@ class MainJefa extends StatelessWidget {
           children: [
             _buildTabBar(context),
             const SizedBox(height: 10),
-            const Text(
-              'SEGUIMIENTO ACADÉMICO',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF2C3E50),
-              ),
-            ),
+            
+            // 🟪 Título principal estilizado (igual que mainDocente)
+            _buildMainTitle(),
+            
             const SizedBox(height: 10),
             Expanded(
               child: Row(
@@ -69,34 +65,94 @@ class MainJefa extends StatelessWidget {
   }
 
   Widget _buildTabBar(BuildContext context) {
-    final tabs = [
-      'INSTRUMENTACIÓN',
-      'SEGUIMIENTO 1',
-      'SEGUIMIENTO 2',
-      'SEGUIMIENTO 3',
-      'REPORTE FINAL',
-    ];
-
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: tabs.map((label) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const Inicio()));
-          },
+      children: [
+        Expanded(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: label == 'INSTRUMENTACIÓN' ? const Color(0xFF00A0E3) : const Color(0xFF7A7A7A),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Text(
-              label,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+            color: const Color(0xFF00A0E3),
+            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            alignment: Alignment.center,
+            child: const Text(
+              'INSTRUMENTACIÓN',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
-        );
-      }).toList(),
+        ),
+        for (int i = 1; i <= 3; i++)
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const Inicio()), // Puedes cambiar luego
+                );
+              },
+              child: Container(
+                color: const Color(0xFF888888),
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                alignment: Alignment.center,
+                child: Text(
+                  'SEGUIMIENTO $i',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const Inicio()),
+              );
+            },
+            child: Container(
+              color: const Color(0xFF888888),
+              padding: const EdgeInsets.symmetric(vertical: 15.0),
+              alignment: Alignment.center,
+              child: const Text(
+                'REPORTE FINAL',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // 🟪 Título principal con fondo oscuro y marco gris (igual que mainDocente)
+  Widget _buildMainTitle() {
+    return Container(
+      width: double.infinity,
+      color: const Color(0xFF888888), // Fondo gris exterior
+      padding: const EdgeInsets.all(2.0), // Padding gris alrededor
+      child: Container(
+        width: double.infinity,
+        color: const Color(0xFF2C3E50),
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        alignment: Alignment.center,
+        child: const Text(
+          'SEGUIMIENTO ACADÉMICO',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+      ),
     );
   }
 
